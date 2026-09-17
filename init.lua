@@ -293,6 +293,7 @@ local function spl_transfer(cut)
     else
         ya.emit("yank", {})
     end
+    ya.emit("escape", { visual = true })
     ya.emit("tab_switch", { dst_tab - 1 })
     ya.emit("paste", {})
     if not cut then
