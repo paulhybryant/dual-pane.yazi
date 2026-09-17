@@ -1,6 +1,6 @@
 # dual-pane.yazi
 
-[dual-pane.yazi](https://github.com/dawsers/dual-pane.yazi) provides true dual-pane file management for [Yazi](https://github.com/sxyazi/yazi/), following the classic Dual Commander (Norton Commander, Midnight Commander, Total Commander) workflow.
+[dual-pane.yazi](https://github.com/paulhybryant/dual-pane.yazi) provides true dual-pane file management for [Yazi](https://github.com/sxyazi/yazi/), following the classic Dual Commander (Norton Commander, Midnight Commander, Total Commander) workflow.
 
 ## Features
 
@@ -25,14 +25,14 @@ Clone the repository and symlink it to your Yazi plugins directory:
 
 ```sh
 mkdir -p ~/src ~/.config/yazi/plugins
-git clone https://github.com/dawsers/dual-pane.yazi.git ~/src/dual-pane.yazi
+git clone https://github.com/paulhybryant/dual-pane.yazi.git ~/src/dual-pane.yazi
 ln -s ~/src/dual-pane.yazi ~/.config/yazi/plugins/dual-pane.yazi
 ```
 
 ### Via Yazi Package Manager
 
 ```sh
-ya pkg add dawsers/dual-pane
+ya pkg add paulhybryant/dual-pane
 ```
 
 ## Setup
