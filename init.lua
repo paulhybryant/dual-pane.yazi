@@ -282,44 +282,32 @@ end
 
 -- Apply a file operation to the selection (or the hovered file) and send it
 -- to the other pane (like in Midnight Commander / Total Commander F5 / F6).
-local function spl_transfer(operation)
-    if not dp then return end
+local function spl_transfer(cut)
+    if not dp or not dp.tabs then return end
+    local src_tab = dp.tabs[active_pane()]
+    local dst_tab = dp.tabs[other_pane()]
+    if not src_tab or not dst_tab then return end
 
-    local source = cx.active
-    local target = cx.tabs[dp.tabs[other_pane()]]
-    if not target then return end
-
-    local urls = {}
-
-    for _, file in pairs(source.selected) do
-        urls[#urls + 1] = file.url
+    if cut then
+        ya.emit("yank", { cut = true })
+    else
+        ya.emit("yank", {})
     end
-
-    if #urls == 0 and source.current.hovered then
-        urls[1] = source.current.hovered.url
+    ya.emit("tab_switch", { dst_tab - 1 })
+    ya.emit("paste", {})
+    if not cut then
+        ya.emit("unyank", {})
     end
-
-    if #urls == 0 then return end
-
-    local target_cwd = target.current.cwd
-    ya.async(function(items, cwd, op)
-        for _, url in ipairs(items) do
-            if url.name then
-                ya.task(op, {
-                    from = url,
-                    to = cwd:join(url.name),
-                }):spawn()
-            end
-        end
-    end, urls, target_cwd, operation)
+    ya.emit("tab_switch", { src_tab - 1 })
+    ui.render()
 end
 
 local function spl_copy()
-    spl_transfer("copy")
+    spl_transfer(false)
 end
 
 local function spl_move()
-    spl_transfer("move")
+    spl_transfer(true)
 end
 
 local function parse_act(job)
